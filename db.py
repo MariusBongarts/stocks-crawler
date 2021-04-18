@@ -3,19 +3,18 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 import json
+import sys
 from dotenv import load_dotenv
 load_dotenv()
 import os
 
-
-firebase_config = y = json.loads(os.environ['FIREBASE_SDK'])
-print(firebase_config)
-if firebase_config is not None:
-  with open('firebase-sdk-test.json', 'w') as f:
-    json.dump(firebase_config, f)
+firebase_config = os.environ['FIREBASE_SDK']
 
 
-cred = credentials.Certificate("firebase-sdk.json")
+firebase_config = json.loads(firebase_config)
+
+
+cred = credentials.Certificate(firebase_config)
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
