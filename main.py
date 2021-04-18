@@ -1,7 +1,9 @@
 import requests
 base_url = "https://www.finanzen.net"
 from bs4 import BeautifulSoup
+from db import write
 
+# db = FireStoreDb()
 
 def get_soup(url):
     page = requests.get(url)
@@ -13,10 +15,14 @@ def get_table(soup):
 
 def get_stock_info(href):
     soup = get_soup(base_url + href)
+    instrument_id = soup.select('.instrument-id span[cptxt="WKN"]')[0].parent.text.split()
+    isin = instrument_id[len(instrument_id) - 1]
+    wkn = instrument_id[1]
     price_target_container = soup.select('.iconTacho')[0].parent
     price_target_percentage = price_target_container.select('strong')[0].text
     price_target_absolute = price_target_container.select('strong')[1].text
     stock = {}
+    stock["id"] = wkn
     stock["href"] = href
     stock["price_target_percentage"] = price_target_percentage
     stock["price_target_absolute"] = price_target_absolute
@@ -45,4 +51,5 @@ for index in indexs:
             print(href)
             text = a_element.text
             stock = get_stock_info(href)
+            write("stocks", stock)
             print(stock)

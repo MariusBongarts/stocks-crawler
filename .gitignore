@@ -1,2 +1,4 @@
 .venv
 .vscode
+firebase-sdk.json
+__pycache__
