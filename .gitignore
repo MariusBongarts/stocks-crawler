@@ -2,3 +2,5 @@
 .vscode
 firebase-sdk.json
 __pycache__
+
+env.json
