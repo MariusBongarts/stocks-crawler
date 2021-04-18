@@ -28,7 +28,4 @@ jobs:
       run: |
         python main.py
       env:
-        CLIENT_ID: ${{ secrets.CLIENT_ID }}
-        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-        PRIVATE_KEY_ID: ${{ secrets.PRIVATE_KEY_ID }}
-        PROJECT_ID: ${{ secrets.PROJECT_ID }}
+        FIREBASE_SDK: ${{ secrets.FIREBASE_SDK }}
