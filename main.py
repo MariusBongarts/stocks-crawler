@@ -18,13 +18,21 @@ def get_stock_info(href):
 
     soup = get_soup(base_url + href)
     instrument_id = soup.select('.instrument-id span[cptxt="WKN"]')[0].parent.text.split()
+    stock["href"] = href
+    stock["title"] = href.split('/')[len(href.split('/'))-1]
     stock["isin"] = instrument_id[len(instrument_id) - 1]
     stock["wkn"] = instrument_id[1]
     stock["id"] = stock["wkn"]
     price_target_container = soup.select('.iconTacho')[0].parent
-    stock["price_target_percentage"] = float(price_target_container.select('strong')[0].text.replace(',','.').replace('%',''))
-    stock["price_target_absolute"] = float(price_target_container.select('strong')[1].text.replace(',','.'))
+    stock["priceTargetPct"] = float(price_target_container.select('strong')[0].text.replace(',','.').replace('%',''))
+    stock["priceTarget"] = float(price_target_container.select('strong')[1].text.replace(',','.'))
     stock["price"] = float(soup.select('.quotebox div')[0].text.split('EUR')[0].replace(',','.'))
+    stock["kgv"] = soup.select('div[title="Kurs/Buchwert Verhältnis"]')[0].parent.parent.select('td')[1].text.replace(',','.')
+    stock["kcv"] = soup.select('div[title="Kurs/Cashflow Verhältnis"]')[0].parent.parent.select('td')[1].text.replace(',','.')
+    stock["kbv"] = soup.select('div[title="Kurs/Cashflow Verhältnis"]')[0].parent.parent.select('td')[1].text.replace(',','.')
+    stock["dividend"] = soup.select('.table-quotes')[1].select('.table-responsive .table')[0].select('tr')[1].select('td')[3].text.replace(',','.')
+    stock["dividendYield"] = soup.select('.table-quotes')[1].select('.table-responsive .table')[0].select('tr')[2].select('td')[3].text.replace(',','.')
+    print(stock)
     return stock
 
 table = get_table(get_soup(base_url + "/index/dax/30-werte"))
@@ -50,8 +58,8 @@ for index in indexs:
             href = a_element.get('href')
             text = a_element.text
             stock = get_stock_info(href)
-            stock["index_name"] = index_name
-            stock["index_href"] = index_href
+            stock["indexName"] = index_name
+            stock["indexHref"] = index_href
             write("stocks", stock)
           except:
             pass
