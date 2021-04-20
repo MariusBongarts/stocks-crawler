@@ -60,6 +60,6 @@ for index in indexs:
             stock = get_stock_info(href)
             stock["indexName"] = index_name
             stock["indexHref"] = index_href
-            write("stockstest", stock)
+            write("stocks", stock)
           except:
             pass

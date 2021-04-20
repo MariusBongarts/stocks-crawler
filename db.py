@@ -20,9 +20,11 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 def write(collection, data):
-  date_id = f'{date.today().year}{date.today().month}{date.today().day}'
   data["day"] = date.today().day
   data["month"] = date.today().month
   data["year"] = date.today().year
+  day_string = date.today().day if date.today().day > 10 else f'0{date.today().day}'
+  month_string = date.today().month if date.today().month > 10 else f'0{date.today().month}'
+  date_id = f'{data["year"]}{month_string}{day_string}'
   db.collection(collection).document(date_id + data['id']).set(data)
 
