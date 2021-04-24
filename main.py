@@ -54,13 +54,10 @@ for index in indexs:
 
     table = get_table(get_soup(base_url + index_href))
     rows = table.select('tr')
-    # rows = table.select('.table-responsive .table tbody tr')
-    print(len(rows))
 
     for row in rows:
         try:
             a_element = row.select('td')[0].select('a')[0]
-            print(a_element)
         except Exception as e:
             print(e)
             a_element = None
@@ -68,13 +65,15 @@ for index in indexs:
         if a_element is not None:
           try:
             href = a_element.get('href')
-            text = a_element.text
-            stock = get_stock_info(href)
-            stock["indexName"] = index_name
-            stock["indexHref"] = index_href
-            print(stock)
-            write("stocks", stock)
-            stocks.append(stock)
+            # Check if stock has already been crawled
+            if href not in list(map(lambda x: x["href"], stocks)):
+              text = a_element.text
+              stock = get_stock_info(href)
+              stock["indexName"] = index_name
+              stock["indexHref"] = index_href
+              print(stock)
+              write("stocks", stock)
+              stocks.append(stock)
           except Exception as e:
             print(e)
             pass
