@@ -27,4 +27,6 @@ jobs:
     - name: Run crawler
       env:
         FIREBASE_SDK: ${{ secrets.FIREBASE_SDK }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_BOT_CHAT_ID: ${{ secrets.TELEGRAM_BOT_CHAT_ID }}
       run: python telegram.py
