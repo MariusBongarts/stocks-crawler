@@ -73,7 +73,7 @@ for index in indexs:
             stock["indexName"] = index_name
             stock["indexHref"] = index_href
             print(stock)
-            # write("stocks", stock)
+            write("stocks", stock)
             stocks.append(stock)
           except Exception as e:
             print(e)
