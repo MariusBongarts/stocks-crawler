@@ -56,4 +56,4 @@ def test():
   {'href': '/aktien/apple-aktie', 'title': 'apple-aktie', 'isin': 'AAPL', 'wkn': '865985', 'id': '865985', 'priceTarget': 142.0, 'price': 109.58, 'priceTargetPct': 29.59, 'kgv': '35.60', 'kcv': '25.38', 'kbv': '25.38', 'dividend': '0.86', 'dividendYield': '0.65', 'indexName': 'Dow Jones', 'indexHref': '/index/dow_jones/werte'}
   ])
 
-# test()
+test()
